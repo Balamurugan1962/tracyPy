@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: tracyPy
+Version: 0.0.1
+Summary: A lightweight Python library that wraps NumPy-style array operations but also retains an expression history
+Author-email: Balamurugan S <balamurugan.sekar@icloud.com>
+License-Expression: MIT
+Project-URL: Homepage, https://github.com/balamurugan1962/tracyPy
+Project-URL: Issues, https://github.com/balamurugan1962/tracyPy/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# tracyPy
+A lightweight Python library that wraps NumPy-style array operations but also retains an expression history

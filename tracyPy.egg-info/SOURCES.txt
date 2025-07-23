@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+tracyPy/Var.py
+tracyPy/__init__.py
+tracyPy/utils.py
+tracyPy.egg-info/PKG-INFO
+tracyPy.egg-info/SOURCES.txt
+tracyPy.egg-info/dependency_links.txt
+tracyPy.egg-info/top_level.txt

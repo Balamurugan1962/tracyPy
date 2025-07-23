@@ -1,3 +1,4 @@
+import numpy as np
 
 class Var:
     primitives = (bool, int, float)
@@ -20,7 +21,7 @@ class Var:
         return self.__mul__(other)
 
     def __rtruediv__(self,other):
-        return self.__truediv(other)
+        return self.__truediv__(other)
 
 
     def __add__(self,other):
@@ -73,6 +74,57 @@ class Var:
 
         return Var(newValue,newName)
 
+
+
+
+
+
+
+
+    def __getitem__(self, idx):
+
+        if isinstance(idx,tuple):
+            idxstr = ""
+            for i in idx:
+                if isinstance(i,slice):
+                    idxstr +=":,"
+                else:
+                    idxstr += str(i)
+
+        else:
+            idxstr = str(idx)
+
+        if isinstance(idx,Var):
+            newValue =  self.data[idx.value]
+            newName = f"{self.name}[{idx.name}]"
+        else:
+            newValue = self.data[idx]
+            newName = f"{self.name}[{idxstr}]"
+
+        return Var(newValue,newName)
+
+    def __setitem__(self, idx, value):
+        self.data[idx] = value
+
+
+
+
+
+
+    def __eq__(self, other):
+        if isinstance(other,Var):
+            newValue = (self.value == other.value)
+            newName = f"[{self.name}=={other.name}]"
+
+        elif isinstance(other,self.primitives):
+            newValue = (self.value == other)
+            newName = f"[{self.name}=={other}]"
+        else:
+            raise Exception("Invalid Type: Operation is only done with Var,bool, int and float types")
+
+        return Var(newValue,newName)
+
+
     def __pow__(self,other):
         if isinstance(other,Var):
             newValue = self.value ** other.value
@@ -84,6 +136,11 @@ class Var:
             raise Exception("Invalid Type; Operation is only done with Var,bool, int and float types")
 
         return Var(newValue,newName)
+
+
+
+
+
 
     def dot(self,other):
         if not isinstance(other,Var):
@@ -99,7 +156,14 @@ class Var:
         newName = f"({self.name}.T)"
         return Var(newValue,newName)
 
-    def sin(self):
-        newValue = np.sin(self.value)
-        newName = f"sin({self.name})"
+    def sum(self,axis=0):
+        newValue = np.sum(self.value,axis=axis)
+        newName = f"SUM[{self.name}]"
+
+        return Var(newValue,newName)
+
+    def shape(self):
+        newValue = (self.value.shape)
+        newName = f"SHAPE[{self.name}]"
+
         return Var(newValue,newName)
