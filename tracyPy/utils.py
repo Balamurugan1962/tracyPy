@@ -1,26 +1,45 @@
-from . import Var
+from graphviz import Digraph
 import numpy as np
 
-def sin(self):
-    if not isinstance(self,Var):
-        raise Exception("Invalid Type: sin() expects a Var object as its argument")
 
-    newValue = np.sin(self.value)
-    newName = f"SIN[{self.name}]"
 
-    return Var(newValue,newName)
 
-def sum(self,axis=0):
-    if not isinstance(self,Var):
-        raise Exception("Invalid Type: sin() expects a Var object as its argument")
-    newValue = np.sum(self.value,axis=axis)
-    newName = f"SUM[{self.name},{axis}]"
-    return Var(newValue,newName)
+def draw(root, format='pdf', rankdir='LR'):
+    def trace(root):
+        nodes,edges = [],[]
+        visited = []
 
-def log2(self):
-    if not isinstance(self,Var):
-        raise Exception("Invalid Type: log2() expects a Var object as its argument")
+        st = []
+        st.append(root)
+        nodes.append(root)
 
-    newValue = np.log2(self.value)
-    newName = f"LOG2[{self.name}]"
-    return Var(newValue,newName)
+
+        while(len(st)!=0):
+            v = st[-1]
+            st.pop()
+
+            for child in v._prev:
+                nodes.append(child)
+                edges.append((child,v))
+                visited.append(child)
+                st.append(child)
+
+        return nodes,edges
+
+    assert rankdir in ['LR', 'TB']
+
+    nodes, edges = trace(root)
+
+    dot = Digraph(format=format, graph_attr={'rankdir': rankdir})
+
+    for n in nodes:
+        dot.node(name=str(n._id), label = f"{n._name}|value {n.value}" , shape='record')
+
+        if n._op:
+            dot.node(name=str(n._id) + n._op, label=n._op)
+            dot.edge(str(n._id) + n._op, str(n._id))
+
+    for n1, n2 in edges:
+        dot.edge(str(n1._id), str(n2._id) + n2._op)
+
+    dot.render('tree', view=True)
