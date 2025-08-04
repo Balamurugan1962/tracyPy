@@ -1,0 +1,7 @@
+tests/.DS_Store
+.DS_Store
+*.pyc
+*.pyc
+tracyPy/__pycache__/trace.cpython-313.pyc
+*.pyc
+tracyPy/__pycache__/utils.cpython-313.pyc

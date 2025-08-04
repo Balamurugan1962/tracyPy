@@ -1,7 +1,20 @@
 from graphviz import Digraph
+from .trace import trace
 import numpy as np
 
 
+def sum(self):
+    return trace(self.value.sum(),[self],"SUM",f"SU([{self._name})")
+
+def dot(self,other):
+    return trace(np.dot(self.value,other.value),(self,other),"DOT",f"DOT({self._name})")
+
+def sin(self):
+    return trace(np.sin(self.value),[self],"SIN",f"SIN({self._name})")
+
+
+def matmul(self,other):
+    return trace(np.matmul(self.value,other.value),(self,other),"MATMUL",f"MATMUL({self._name})")
 
 
 def draw(root, format='pdf', rankdir='LR'):
@@ -33,7 +46,7 @@ def draw(root, format='pdf', rankdir='LR'):
     dot = Digraph(format=format, graph_attr={'rankdir': rankdir})
 
     for n in nodes:
-        dot.node(name=str(n._id), label = f"{n._name}|value {n.value}" , shape='record')
+        dot.node(name=str(n._id), label = f"{n._name}" , shape='record')
 
         if n._op:
             dot.node(name=str(n._id) + n._op, label=n._op)

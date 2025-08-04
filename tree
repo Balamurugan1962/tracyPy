@@ -1,16 +1,28 @@
 digraph {
 	graph [rankdir=LR]
-	4345849776 [label="y0*w0+b|value 3" shape=record]
-	"4345849776+" [label="+"]
-	"4345849776+" -> 4345849776
-	4343914304 [label="y0*w0|value 1" shape=record]
-	"4343914304*" [label="*"]
-	"4343914304*" -> 4343914304
-	4344284656 [label="b|value 2" shape=record]
-	4343706176 [label="y0|value 1" shape=record]
-	4345387664 [label="w0|value 1" shape=record]
-	4343914304 -> "4345849776+"
-	4344284656 -> "4345849776+"
-	4343706176 -> "4343914304*"
-	4345387664 -> "4343914304*"
+	4356907184 [label="MATMUL(MATMUL(x)+B)+B" shape=record]
+	"4356907184+" [label="+"]
+	"4356907184+" -> 4356907184
+	4356795488 [label="MATMUL(MATMUL(x)+B)" shape=record]
+	"4356795488MATMUL" [label=MATMUL]
+	"4356795488MATMUL" -> 4356795488
+	4356876880 [label=B shape=record]
+	4356795248 [label="MATMUL(x)+B" shape=record]
+	"4356795248+" [label="+"]
+	"4356795248+" -> 4356795248
+	4356759056 [label=W shape=record]
+	4356877136 [label="MATMUL(x)" shape=record]
+	"4356877136MATMUL" [label=MATMUL]
+	"4356877136MATMUL" -> 4356877136
+	4356758784 [label=B shape=record]
+	4356726272 [label=x shape=record]
+	4356531280 [label=W shape=record]
+	4356795488 -> "4356907184+"
+	4356876880 -> "4356907184+"
+	4356795248 -> "4356795488MATMUL"
+	4356759056 -> "4356795488MATMUL"
+	4356877136 -> "4356795248+"
+	4356758784 -> "4356795248+"
+	4356726272 -> "4356877136MATMUL"
+	4356531280 -> "4356877136MATMUL"
 }
